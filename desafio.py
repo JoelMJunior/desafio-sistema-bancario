@@ -1,5 +1,5 @@
 
-def menu():
+def menu_principal():
     menu = """
 
 [d] Depositar
@@ -22,7 +22,7 @@ def depositar(saldo, valor, extrato, /):
         print("\n=== Depósito realizado com sucesso ===")
 
     else:
-        print("!!! Operação falhou! O valor informado é inválido. !!!")
+        print("\n<><><> Operação falhou! O valor informado é inválido. <><><>")
 
     return saldo, extrato
 
@@ -34,13 +34,13 @@ def sacar(*, valor, saldo, limite, extrato, numero_saques, limite_saques):
     excedeu_saques = numero_saques >= limite_saques
 
     if excedeu_saldo:
-        print("!!! Operação falhou! Você não tem saldo suficiente. !!!")
+        print("\n<><><> Operação falhou! Você não tem saldo suficiente. <><><>")
 
     elif excedeu_limite:
-        print("!!! Operação falhou! O valor do saque excede o limite. !!!")
+        print("\n<><><> Operação falhou! O valor do saque excede o limite. <><><>")
 
     elif excedeu_saques:
-        print("!!! Operação falhou! Número máximo de saques excedido. !!!")
+        print("\n<><><> Operação falhou! Número máximo de saques excedido. <><><>")
 
     elif valor > 0:
         saldo -= valor
@@ -49,7 +49,7 @@ def sacar(*, valor, saldo, limite, extrato, numero_saques, limite_saques):
         print("\n=== Saque realizado com sucesso ===")
 
     else:
-        print("!!! Operação falhou! O valor informado é inválido. !!!")
+        print("<><><> Operação falhou! O valor informado é inválido. <><><>")
 
     return saldo, extrato, numero_saques
 
@@ -64,7 +64,7 @@ def criar_usuario(usuarios):
     usuario = filtrar_usuarios(cpf, usuarios)
 
     if usuario:
-        print("\n!!! Já existe usuário com esse CPF. !!!")
+        print("\n<><><> Já existe usuário com esse CPF. <><><>")
         return
 
     nome = input("Informe seu nome completo: ")
@@ -87,7 +87,7 @@ def criar_conta(agencia, numero_conta, usuarios):
         print("\n=== Conta criada com sucesso ===")
         return {"agencia": agencia, "numero_conta": numero_conta, "usuario": usuario}
 
-    print("\n!!! Usuário não encontrado. É necessário criar um usuário primeiro. !!!")
+    print("\n<><><> Usuário não encontrado. É necessário criar um usuário primeiro. <><><>")
 
 def listar_contas(contas):
     for conta in contas:
@@ -110,7 +110,7 @@ def principal():
     contas = []
 
     while True:
-        opcao = menu()
+        opcao = menu_principal()
 
         if opcao == "d":
             valor = float(input("Informe o valor do depósito: "))
@@ -148,6 +148,6 @@ def principal():
             listar_contas(contas)
             
         else:
-            print("!!! Operação inválida, por favor selecione novamente a operação desejada. !!!")
+            print("\n<><><> Operação inválida, por favor selecione novamente a operação desejada. <><><>")
 
 principal()
