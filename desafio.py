@@ -2,12 +2,24 @@
 def menu_principal():
     menu = """
 
+[u] Criar usuário
+[a] Acessar usuário
+[q] Sair
+
+=> """
+
+    opcao = input(menu)
+    return opcao
+
+def menu_secundario():
+    menu = """
+
 [d] Depositar
 [s] Sacar
 [e] Extrato
-[u] Criar usuário
 [c] Criar conta
 [l] Listar contas
+[v] Voltar
 [q] Sair
 
 => """
@@ -75,6 +87,17 @@ def criar_usuario(usuarios):
 
     print("\n=== Cadastro de usuário realizado com sucesso ===")
 
+def acessar_usuario(usuarios):
+    cpf = input("Informe seu CPF (apenas números): ")
+    usuario = filtrar_usuarios(cpf, usuarios)
+
+    if not usuario:
+        print("\n<><><> Não existe usuário com esse CPF. Crie um usuário. <><><>")
+        return   
+
+    print(f"\n=== Seja bem-vindo(a), {usuario['nome']}! ===")
+    return usuario
+
 def filtrar_usuarios(cpf, usuarios):
     usuarios_filtrados = [usuario for usuario in usuarios if usuario["cpf"] == cpf]
     return usuarios_filtrados[0] if usuarios_filtrados else None
@@ -99,18 +122,17 @@ def listar_contas(contas):
         print("=" * 100)
         print(linha)
 
-def principal(): 
+def usuario_menu(usuarios):
     LIMITE_SAQUES = 3
     AGENCIA = "0001"
     saldo = 0
     limite = 500
     extrato = ""
     numero_saques = 0
-    usuarios = []
     contas = []
 
     while True:
-        opcao = menu_principal()
+        opcao = menu_secundario()
 
         if opcao == "d":
             valor = float(input("Informe o valor do depósito: "))
@@ -131,8 +153,9 @@ def principal():
         elif opcao == "e":
             tirar_extrato(saldo, extrato=extrato)
 
-        elif opcao == "u":
-            criar_usuario(usuarios)
+        elif opcao == "v":
+            principal()
+            break
 
         elif opcao == "c":
             numero_conta = len(contas) + 1
@@ -146,6 +169,28 @@ def principal():
 
         elif opcao == "l":
             listar_contas(contas)
+            
+        else:
+            print("\n<><><> Operação inválida, por favor selecione novamente a operação desejada. <><><>")
+
+def principal(): 
+    usuarios = []
+
+    while True:
+        opcao = menu_principal()
+
+        if opcao == "u":
+            criar_usuario(usuarios)
+
+        elif opcao == "a":
+            usuario = acessar_usuario(usuarios)
+            if usuario:
+                usuario_menu(usuarios)
+                break
+            
+
+        elif opcao == "q":
+            break
             
         else:
             print("\n<><><> Operação inválida, por favor selecione novamente a operação desejada. <><><>")
