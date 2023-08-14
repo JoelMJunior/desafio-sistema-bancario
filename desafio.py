@@ -30,7 +30,7 @@ def menu_secundario():
 def depositar(saldo, valor, extrato, /):
     if valor > 0:
         saldo += valor
-        extrato += f"Depósito: R$ {valor:.2f}\n"
+        extrato += f"Depósito: R$ {valor:.2f}\nSaldo: R$ {saldo:.2f}\n"
         print("\n=== Depósito realizado com sucesso ===")
 
     else:
@@ -56,7 +56,7 @@ def sacar(*, valor, saldo, limite, extrato, numero_saques, limite_saques):
 
     elif valor > 0:
         saldo -= valor
-        extrato += f"Saque: R$ {valor:.2f}\n"
+        extrato += f"Saque: R$ {valor:.2f}\nSaldo: R$ {saldo:.2f}\n"
         numero_saques += 1
         print("\n=== Saque realizado com sucesso ===")
 
@@ -168,8 +168,10 @@ def usuario_menu(usuarios):
             break
 
         elif opcao == "l":
-            listar_contas(contas)
-            
+            if contas:
+                listar_contas(contas)
+            else:
+                print("\n<><><> Você ainda não tem conta corrente. <><><>")
         else:
             print("\n<><><> Operação inválida, por favor selecione novamente a operação desejada. <><><>")
 
